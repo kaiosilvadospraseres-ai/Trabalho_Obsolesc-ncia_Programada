@@ -1,0 +1,580 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f8fbf1;
+    color: #276b1c;
+}
+
+
+/* =========================
+   PÁGINA
+========================= */
+
+.pagina {
+    min-height: 100vh;
+
+    position: relative;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(145, 205, 0, .13) 0 2px,
+            transparent 3px
+        ),
+
+        radial-gradient(
+            circle at 75% 75%,
+            rgba(46, 112, 27, .10) 0 2px,
+            transparent 3px
+        ),
+
+        #f9fcf4;
+
+    background-size:
+        28px 28px,
+        35px 35px;
+}
+
+
+/* Mancha decorativa */
+
+.mancha {
+    position: absolute;
+
+    width: 420px;
+    height: 420px;
+
+    right: -170px;
+    bottom: -190px;
+
+    background: #b8df3e;
+
+    border-radius: 50%;
+
+    opacity: .8;
+}
+
+
+/* =========================
+   CONTEÚDO
+========================= */
+
+.conteudo {
+    width: min(1200px, 92%);
+
+    margin: auto;
+
+    padding: 45px 0 35px;
+
+    position: relative;
+
+    z-index: 2;
+}
+
+
+/* =========================
+   PARTE SUPERIOR
+========================= */
+
+.topo {
+    display: grid;
+
+    grid-template-columns: 42% 58%;
+
+    align-items: center;
+
+    gap: 15px;
+}
+
+
+/* =========================
+   HEXÁGONOS
+========================= */
+
+.rede {
+    position: relative;
+
+    height: 340px;
+}
+
+
+.hex {
+    position: absolute;
+
+    width: 105px;
+    height: 92px;
+
+    background: white;
+
+    border: 6px solid #2c6e1f;
+
+    clip-path: polygon(
+        25% 3%,
+        75% 3%,
+        100% 50%,
+        75% 97%,
+        25% 97%,
+        0 50%
+    );
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 34px;
+
+    box-shadow:
+        inset 0 0 0 3px #d8ed9c;
+}
+
+
+/* Fundo interno dos hexágonos */
+
+.hex::after {
+    content: "";
+
+    position: absolute;
+
+    width: 70px;
+    height: 62px;
+
+    background: rgba(159, 211, 0, .18);
+
+    clip-path: polygon(
+        25% 3%,
+        75% 3%,
+        100% 50%,
+        75% 97%,
+        25% 97%,
+        0 50%
+    );
+}
+
+
+.hex span {
+    position: relative;
+
+    z-index: 2;
+}
+
+
+/* Posição dos hexágonos */
+
+.h1 {
+    left: 35px;
+    top: 75px;
+}
+
+.h2 {
+    left: 135px;
+    top: 20px;
+}
+
+.h3 {
+    left: 235px;
+    top: 75px;
+}
+
+.h4 {
+    left: 135px;
+    top: 130px;
+}
+
+.h5 {
+    left: 35px;
+    top: 185px;
+}
+
+.h6 {
+    left: 235px;
+    top: 185px;
+}
+
+.h7 {
+    left: 335px;
+    top: 130px;
+}
+
+
+/* =========================
+   PONTOS
+========================= */
+
+.ponto {
+    position: absolute;
+
+    width: 18px;
+    height: 18px;
+
+    background: #2c6e1f;
+
+    border-radius: 50%;
+}
+
+
+.p1 {
+    left: 18px;
+    top: 125px;
+}
+
+.p2 {
+    left: 132px;
+    top: 0;
+}
+
+.p3 {
+    left: 338px;
+    top: 45px;
+}
+
+.p4 {
+    left: 330px;
+    top: 225px;
+}
+
+.p5 {
+    left: 150px;
+    top: 300px;
+}
+
+
+/* =========================
+   LINHAS
+========================= */
+
+.linha {
+    position: absolute;
+
+    height: 5px;
+
+    background: #2c6e1f;
+
+    transform-origin: left center;
+}
+
+
+.l1 {
+    width: 90px;
+
+    left: 25px;
+    top: 135px;
+}
+
+
+.l2 {
+    width: 65px;
+
+    left: 145px;
+    top: 15px;
+
+    transform: rotate(90deg);
+}
+
+
+.l3 {
+    width: 75px;
+
+    left: 320px;
+    top: 53px;
+
+    transform: rotate(45deg);
+}
+
+
+.l4 {
+    width: 80px;
+
+    left: 320px;
+    top: 235px;
+
+    transform: rotate(-45deg);
+}
+
+
+/* =========================
+   TÍTULO
+========================= */
+
+.titulo small {
+    display: block;
+
+    font-size: clamp(24px, 3vw, 43px);
+
+    font-weight: 300;
+
+    letter-spacing: 2px;
+
+    color: #94ce00;
+
+    margin-bottom: 2px;
+}
+
+
+.titulo h1 {
+    font-size: clamp(42px, 6vw, 78px);
+
+    line-height: .95;
+
+    font-weight: 900;
+
+    letter-spacing: -3px;
+
+    text-transform: uppercase;
+
+    color: #286d1e;
+}
+
+
+/* Linha abaixo do título */
+
+.linha-titulo {
+    width: 85%;
+
+    height: 7px;
+
+    background: #a5d500;
+
+    margin: 25px 0 18px;
+}
+
+
+/* Subtítulo */
+
+.subtitulo {
+    font-size: clamp(18px, 2vw, 28px);
+
+    line-height: 1.2;
+
+    text-transform: uppercase;
+
+    color: #94ce00;
+
+    font-weight: bold;
+}
+
+
+/* =========================
+   CARDS
+========================= */
+
+.informacoes {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 25px;
+
+    margin-top: 45px;
+
+    padding: 25px 0;
+}
+
+
+.card {
+    padding: 18px 20px;
+
+    border-left: 6px solid #a4d300;
+
+    background: rgba(255, 255, 255, .72);
+}
+
+
+.card .numero {
+    color: #2b6d1f;
+
+    font-size: clamp(34px, 4vw, 52px);
+
+    font-weight: 900;
+
+    line-height: 1;
+}
+
+.link {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+.card h2 {
+    margin: 8px 0;
+
+    color: #2b6d1f;
+
+    font-size: 20px;
+
+    text-transform: uppercase;
+}
+
+
+.card p {
+    color: #47783d;
+
+    font-size: 16px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================
+   FAIXA INFERIOR
+========================= */
+
+.faixa {
+    margin-top: 20px;
+
+    min-height: 115px;
+
+    background: #a9d83c;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-around;
+
+    gap: 25px;
+
+    padding: 22px 35px;
+
+    position: relative;
+}
+
+
+.faixa::after {
+    content: "";
+
+    position: absolute;
+
+    right: -60px;
+    top: -35px;
+
+    width: 170px;
+    height: 170px;
+
+    border-radius: 50%;
+
+    background: #2c6e1f;
+
+    opacity: .12;
+}
+
+
+/* Texto da faixa */
+
+.logo-texto {
+    font-size: 28px;
+
+    font-weight: 900;
+
+    color: #245d1a;
+
+    text-transform: uppercase;
+}
+
+
+.logo-texto span {
+    display: block;
+
+    font-size: 12px;
+
+    letter-spacing: 1px;
+
+    font-weight: normal;
+}
+
+
+/* Símbolo de reciclagem */
+
+.reciclagem {
+    font-size: 58px;
+}
+
+
+/* =========================
+   RESPONSIVIDADE
+========================= */
+
+@media (max-width: 850px) {
+
+    .topo {
+        grid-template-columns: 1fr;
+    }
+
+
+    .rede {
+        transform: scale(.85);
+
+        transform-origin: left top;
+
+        margin-bottom: -45px;
+    }
+
+
+    .titulo {
+        text-align: center;
+    }
+
+
+    .linha-titulo {
+        width: 100%;
+    }
+
+
+    .informacoes {
+        grid-template-columns: 1fr;
+    }
+
+
+    .faixa {
+        flex-direction: column;
+
+        text-align: center;
+    }
+}
+
+
+/* =========================
+   CELULARES
+========================= */
+
+@media (max-width: 500px) {
+
+    .conteudo {
+        width: 94%;
+
+        padding-top: 25px;
+    }
+
+
+    .rede {
+        transform: scale(.65);
+
+        margin-bottom: -105px;
+    }
+
+
+    .titulo h1 {
+        font-size: 40px;
+
+        letter-spacing: -1px;
+    }
+
+
+    .titulo small {
+        font-size: 22px;
+    }
+
+
+    .subtitulo {
+        font-size: 17px;
+    }
+
+}
