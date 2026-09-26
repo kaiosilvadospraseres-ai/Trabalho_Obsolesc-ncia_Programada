@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desafio da Obsolescência Programada</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 480px;
+            width: 100%;
+        }
+        h1 { color: #333; margin-bottom: 5px; font-size: 24px; }
+        .status-box {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+        .stat { font-weight: bold; color: #0056b3; }
+        #phone {
+            font-size: 80px;
+            margin: 15px 0;
+            transition: transform 0.3s;
+        }
+        .choice-box {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .btn {
+            color: white;
+            border: none;
+            padding: 12px 18px;
+            font-size: 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+            flex: 1;
+        }
+        .btn-keep { background-color: #007bff; }
+        .btn-keep:hover { background-color: #0056b3; }
+        .btn-buy { background-color: #dc3545; }
+        .btn-buy:hover { background-color: #bd2130; }
+        .btn:disabled { background-color: #cccccc !important; cursor: not-allowed; }
+        #log {
+            margin-top: 15px;
+            font-size: 15px;
+            color: #444;
+            min-height: 50px;
+            line-height: 1.4;
+        }
+        .explanation {
+            display: none;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 2px dashed #6c757d;
+            text-align: left;
+        }
+        .explanation h3 { color: #333; margin-top: 0; }
+        .highlight { color: #dc3545; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Desafio do Smartphone</h1>
+    <p>Seu objetivo é gastar o mínimo possível e fazer seu aparelho durar.</p>
+    
+    <div class="status-box">
+        <div>Ano: <span id="years" class="stat">1</span></div>
+        <div>Saúde: <span id="health" class="stat">100%</span></div>
+        <div>Gastos: <span id="expenses" class="stat">R$ 0</span></div>
+    </div>
+
+    <div id="phone">📱</div>
+    <p id="log">Seu smartphone é novo e funciona perfeitamente! O que você quer fazer no próximo ano?</p>
+    
+    <div class="choice-box">
+        <button id="btn-keep" class="btn btn-keep" onclick="chooseOption('keep')">🔧 Manter Celular</button>
+        <button id="btn-buy" class="btn btn-buy" onclick="chooseOption('buy')">🛍️ Comprar Novo</button>
+    </div>
+    
+    <div id="explanation" class="explanation">
+        <h3>💡 Lição sobre Obsolescência</h3>
+        <p id="explanation-text"></p>
+        <button class="btn btn-keep" style="width: 100%; margin-top: 10px;" onclick="resetGame()">Jogar Novamente</button>
+    </div>
+</div>
+
+<script>
+    let year = 1;
+    let health = 100;
+    let expenses = 0;
+
+    const logEl = document.getElementById('log');
+    const yearsEl = document.getElementById('years');
+    const healthEl = document.getElementById('health');
+    const expensesEl = document.getElementById('expenses');
+    const phoneEl = document.getElementById('phone');
+    const btnKeep = document.getElementById('btn-keep');
+    const btnBuy = document.getElementById('btn-buy');
+    const expBox = document.getElementById('explanation');
+    const expText = document.getElementById('explanation-text');
+
+    // Cenários de obsolescência programada ano a ano
+    const scenarios = {
+        2: {
+            problem: "O sistema atualizou sozinho e a bateria começou a descarregar muito rápido.",
+            keepLog: "Você decidiu manter! Pagou R$ 250 por uma bateria nova paralela. A saúde subiu um pouco, mas a lentidão continua.",
+            keepCost: 250,
+            keepHealthEffect: -10, // perde menos saúde por consertar
+            buyLog: "Você comprou um novo por R$ 2.000 porque não aguentava a bateria viciada.",
+            buyCost: 2000,
+            concept: "<strong>Obsolescência Funcional (Software):</strong> Fabricantes lançam atualizações pesadas que sabotam o desempenho do hardware antigo, forçando você a gastar com reparos ou comprar outro."
+        },
+        3: {
+            problem: "A tela quebrou. A assistência oficial cobra quase o preço de um celular novo para trocar.",
+            keepLog: "Você decidiu manter! Gastou R$ 900 na tela nova. Ficou caro e a tela não tem o mesmo brilho de antes.",
+            keepCost: 900,
+            keepHealthEffect: -30,
+            buyLog: "Você preferiu comprar outro por R$ 2.200, já que consertar o antigo era economicamente inviável.",
+            buyCost: 2200,
+            concept: "<strong>Inviabilidade de Reparo:</strong> Os produtos são desenhados para dificultar o conserto. Peças coladas, raras ou propositalmente caras fazem o consumidor desistir de consertar."
+        },
+        4: {
+            problem: "Seus aplicativos de banco e o WhatsApp pararam de funcionar porque exigem um sistema operacional mais novo que seu celular não recebe mais.",
+            keepLog: "Você insistiu em ficar com ele, mas agora tem um aparelho que liga, mas não roda nada útil. Virou um peso de papel.",
+            keepCost: 0,
+            keepHealthEffect: -60,
+            buyLog: "Sem conseguir usar os apps do dia a dia, você foi obrigado a gastar R$ 2.500 em um novo aparelho.",
+            buyCost: 2500,
+            concept: "<strong>Obsolescência Tecnológica/Sistêmica:</strong> Mesmo que o aparelho físico esteja intacto, o ecossistema digital corta o suporte para te obrigar a migrar para tecnologias mais recentes."
+        }
+    };
+
+    function chooseOption(choice) {
+        let currentScenario = scenarios[year + 1];
+        
+        if (choice === 'keep') {
+            expenses += currentScenario.keepCost;
+            health += currentScenario.keepHealthEffect;
+            if (health < 0) health = 0;
+            logEl.innerHTML = `<strong>Resultado:</strong> ${currentScenario.keepLog}`;
+        } else if (choice === 'buy') {
+            expenses += currentScenario.buyCost;
+            health = 100; // Celular novo resgata a saúde
+            logEl.innerHTML = `<strong>Resultado:</strong> ${currentScenario.buyLog}`;
+        }
+
+        // Atualiza interface física
+        year++;
+        yearsEl.innerText = year;
+        healthEl.innerText = health + "%";
+        expensesEl.innerText = `R$ ${expenses}`;
+
+        // Atualiza visual do emoji do celular
+        if (health > 70) phoneEl.innerText = "📱";
+        else if (health > 30) phoneEl.innerText = "🤕";
+        else phoneEl.innerText = "💀";
+
+        // Avança o loop ou finaliza
+        setTimeout(() => {
+            if (year < 4) {
+                logEl.innerHTML += `<br><br><span class="highlight">Próximo problema (Ano ${year}):</span> ${scenarios[year + 1].problem}`;
+            } else {
+                endGame(currentScenario.concept);
+            }
+        }, 600);
+    }
+
+    function endGame(conceptText) {
+        btnKeep.disabled = true;
+        btnBuy.disabled = true;
+        
+        let resumoFinal = `Você terminou o experimento no <strong>Ano 4</strong> com um gasto total de <span class="highlight">R$ ${expenses}</span>.<br><br>`;
+        
+        expText.innerHTML = resumoFinal + conceptText + "<br><br>Reparar deveria ser um direito simples e acessível, mas a indústria molda o mercado para o descarte constante.";
+        expBox.style.display = 'block';
+    }
+
+    function resetGame() {
+        year = 1;
+        health = 100;
+        expenses = 0;
+        yearsEl.innerText = year;
+        healthEl.innerText = health + "%";
+        expensesEl.innerText = "R$ 0";
+        phoneEl.innerText = "📱";
+        logEl.innerHTML = "Seu smartphone é novo e funciona perfeitamente! O que você quer fazer no próximo ano?";
+        btnKeep.disabled = false;
+        btnBuy.disabled = false;
+        expBox.style.display = 'none';
+    }
+</script>
+
+</body>
+</html>

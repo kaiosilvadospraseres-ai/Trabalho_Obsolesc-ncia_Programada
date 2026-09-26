@@ -1,0 +1,14 @@
+.solucoes {
+    background-color: #a9df32;
+    padding: 30px;
+    margin-top: 40px;
+}
+
+.solucoes h2 {
+    color: #237523;
+}
+
+.solucoes p {
+    color: #356b2d;
+    font-size: 17px;
+}
